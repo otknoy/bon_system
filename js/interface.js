@@ -25,7 +25,7 @@ function spread($nodes, r) {
 	$nodes[i].animate({
 	    left: x,
 	    top: y
-	}, "slow");
+	}, 'slow');
     }
 }
 
@@ -40,8 +40,8 @@ function nodeClicked($clickedNode, clickedNodeClass, dictFile, nextNodesClass) {
 	top: centerY - $clickedNode.height()/2
     }, function() {
 	// remove other nodes
-	var $others = $(".node").not($clickedNode);
-	$others.hide("slow", function() {
+	var $others = $('.node').not($clickedNode);
+	$others.hide('slow', function() {
 	    $(this).remove();
 	});
 
@@ -53,11 +53,11 @@ function nodeClicked($clickedNode, clickedNodeClass, dictFile, nextNodesClass) {
 	    for (var i = 0; i < $relatedNodes.length; i++) {
 		var $node = $relatedNodes[i];
 		$node.addClass(nextNodesClass);
+		$interface.append($node);
 		$node.css({
 		    left: centerX - $node.width()/2,
 		    top: centerY - $node.height()/2
 		});
-		$interface.append($node);
 	    }
 
 	    // spread them
@@ -78,8 +78,8 @@ $(document).on('click', '.rakuten', function() {
 
         for (var i = 0 ; i < labels.length; i++){
     	    var $item = $('<img>').attr({
-    		class: 'item',
-    		src: 'img/' + labels[i]
+    		'class': 'item',
+    		'src': 'img/' + labels[i]
     	    });
     	    $('#items').append($item);
     	}
@@ -106,7 +106,7 @@ $(function() {
 	var labels = [];
 	for (var key in data) labels.push(key);
 
-	var $interface = $('#interface')
+	var $interface = $('#interface');
 	var centerX = $interface.width()  / 2;
 	var centerY = $interface.height() / 2;
 
@@ -114,18 +114,14 @@ $(function() {
 	for (var i = 0; i < $nodes.length; i++) {
 	    var $node = $nodes[i];
 	    $node.addClass('rakuten');
+	    $interface.append($node);
 	    $node.css({
 		left: centerX - $node.width()/2,
 		top: centerY - $node.height()/2
 	    });
-
-	    $interface.append($node);
 	}
 
 	var r = 256;
 	spread($nodes, r);
-
     });
-    
-    // loadData();
 });
