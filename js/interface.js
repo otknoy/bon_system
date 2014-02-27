@@ -34,41 +34,51 @@ function nodeClicked($clickedNode, clickedNodeClass, dictFile, nextNodesClass) {
     var centerX = $interface.width()  / 2;
     var centerY = $interface.height() / 2;
 
-    // move clicked node to the center
-    $clickedNode.animate({
-	left: centerX - $clickedNode.width()/2,
-	top: centerY - $clickedNode.height()/2
-    }, function() {
-	// remove other nodes
-	var $others = $('.node').not($clickedNode);
-	$others.hide('slow', function() {
-	    $(this).remove();
-	});
+    var $centerNode = $('.'+nextNodesClass);
+    var $others = $('.node').not($clickedNode);
 
-	// create related nodes to the center
-	$.getJSON(dictFile, function(data){
-	    var labels = data[$clickedNode.text()];
-	    
-	    var $relatedNodes = createNodes(labels);
-	    for (var i = 0; i < $relatedNodes.length; i++) {
-		var $node = $relatedNodes[i];
-		$node.addClass(nextNodesClass);
-		$interface.append($node);
-		$node.css({
-		    left: centerX - $node.width()/2,
-		    top: centerY - $node.height()/2
-		});
-	    }
+    // fade out and remove center node
+    $('.'+nextNodesClass).fadeOut('normal', function() {
+    	$(this).remove();
 
-	    // spread them
-	    var r = 192;
-	    spread($relatedNodes, r);
+	// move clicked node to the center
+	$clickedNode.animate({
+    	    left: centerX - $clickedNode.width()/2,
+    	    top: centerY - $clickedNode.height()/2
+	}, 'normal', function() {
+    	    // fade out and remove other nodes
+    	    var $others = $('.node').not($clickedNode);
+    	    $others.fadeOut('slow', function() {
+    		$(this).remove();
+    	    });
+
+    	    // create related nodes to the center
+    	    $.getJSON(dictFile, function(data){
+    		var labels = data[$clickedNode.text()];
+
+    		var $relatedNodes = createNodes(labels);
+    		for (var i = 0; i < $relatedNodes.length; i++) {
+    		    var $node = $relatedNodes[i];
+    		    $node.addClass(nextNodesClass);
+    		    $interface.append($node);
+    		    $node.css({
+    			left: centerX - $node.width()/2,
+    			top: centerY - $node.height()/2
+    		    });
+    		}
+
+    		// spread them
+    		var r = 192;
+    		spread($relatedNodes, r);
+    	    });
 	});
     });
 }
 
 
 $(document).on('click', '.rakuten', function() {
+    if ($(this).attr('id') == 'center') return;
+    $(this).attr({id: 'center'});    
     nodeClicked($(this), 'rakuten', 'data/data1.json', 'tsunagari');
 
     // append item images
@@ -87,6 +97,8 @@ $(document).on('click', '.rakuten', function() {
 });
 
 $(document).on('click', '.tsunagari', function() {
+    if ($(this).attr('id') == 'center') return;
+    $(this).attr({id: 'center'});        
     nodeClicked($(this), 'tsunagari', 'data/data2.json', 'rakuten');
 
     // remove item images
@@ -120,6 +132,14 @@ $(function() {
 		top: centerY - $node.height()/2
 	    });
 	}
+	var $center = createNode('');
+	$center.addClass('tsunagari');
+	$center.attr({id: 'center'});
+	$interface.append($center);
+	$center.css({
+	    left: centerX - $center.width()/2,
+	    top: centerY - $center.height()/2
+	});
 
 	var r = 256;
 	spread($nodes, r);
