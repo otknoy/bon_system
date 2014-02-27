@@ -1,0 +1,15 @@
+.node {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    text-align: center;
+    position: absolute;
+}
+
+.rakuten {
+    background-color: #7f7fff;
+}
+
+.tsunagari {
+    background-color: #ff7f7f;
+}
