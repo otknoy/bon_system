@@ -87,12 +87,13 @@ $(document).on('click', '.rakuten', function() {
     	var labels = data[$node.text()];
 
         for (var i = 0 ; i < labels.length; i++){
-    	    var $item = $('<img>').attr({
-    		'class': 'item',
-    		'src': 'img/' + labels[i]
-    	    });
-    	    $('#items').append($item);
+	    var $item = $('<div>').addClass('item');
+    	    var $img = $('<img>').addClass('item_img').attr({'src': 'img/' + labels[i]});
+	    $item.append($img);
+	 
+	    $('#items').append($item);
     	}
+
     });
 });
 
@@ -107,12 +108,30 @@ $(document).on('click', '.tsunagari', function() {
 
 
 $(document).on('click', '.item', function() {
-    var $clone = $(this).clone(true).removeClass('item').addClass('stock');
-    $('#stocks').append($clone);
+    // var $clone = $(this).clone(true).removeClass('item').addClass('stock');
+    // $('#stocks').append($clone);
+    var imgSrc = $(this).children().attr('src');
+    var $stock = $('<div>').addClass('stock');
+
+    var $removeButton = $('<div>').addClass('removebutton').text('×');
+    $stock.append($removeButton);
+
+    var $img = $('<img>').addClass('stock_img').attr({'src': imgSrc});    
+    $stock.append($img);
+
+    $('#stocks').append($stock);
 });
 
-$(document).on('click', '.stock', function() {
-    $(this).remove();
+$(document).on('mouseover', '.stock', function() {
+    console.log(this);
+});
+
+$(document).on('mouseout', '.stock', function() {
+    console.log(this);
+});
+
+$(document).on('click', '.removebutton', function() {
+    $(this).parent().remove();
 });
 
 

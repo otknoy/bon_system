@@ -10,7 +10,6 @@
     float: left;
 }
 
-
 #interface {
     width: 100%;
     height: 600px;
@@ -25,20 +24,53 @@
     height: 200px;
 }
 
+.item {
+    padding: 1px;
+    width: 160px;
+    height: 98%;
+    float: left;
+}
+
+.item_img {
+    width: auto;
+    height: 100%;
+}
+
+
 #stocks {
+    overflow: scroll;
     border-style: dashed;
     width: 100%;
     height: 800px;
 }
 
-
-.item {
-    padding: 4px;
-    width: auto;
-    height: 95%;
+.stock {
+    position: relative;
+    padding: 2%;
+    width: 46%;
+    height: auto;
+    float: left;
 }
 
-.stock {
-    width: 48%;
+.stock_img {
+    border: 1px solid black;    
+    padding: 4%;
+    width: 92%;
     height: auto;
+}
+
+.removebutton {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: white;
+    border: 1px solid #AEAEAE;
+    width: 16px;
+    height: 16px;
+    border-radius: 33%;
+    color: #AEAEAE;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    cursor:pointer;
 }
