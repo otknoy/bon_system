@@ -111,6 +111,10 @@ $(document).on('click', '.item', function() {
     $('#stocks').append($clone);
 });
 
+$(document).on('click', '.stock', function() {
+    $(this).remove();
+});
+
 
 $(function() {
     // initialize rakuten nodes
